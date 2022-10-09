@@ -1,0 +1,18 @@
+@import './../../styles/colors.scss';
+
+.container {
+  font-family: 'Roboto Flex', sans-serif;
+  min-width: 100vw;
+  min-height: 100vh;
+
+  .header {
+    width: 100%;
+    background-color: $color-blue-light;
+    height: auto;
+  }
+
+  .main{
+    width: 100%;
+    background-color: $color-white;
+  }
+}

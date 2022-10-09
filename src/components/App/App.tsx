@@ -3,17 +3,19 @@ import { Route, Routes } from 'react-router-dom';
 import Main from '../Main';
 import Nav from '../Nav';
 
-import './App.css';
+import styles from './App.module.scss';
 
 function App(): JSX.Element {
   return (
-    <div className="App">
-      <Nav />
-      <div>
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <Nav />
+      </header>
+      <main className={styles.main}>
         <Routes>
           <Route element={<Main />} path={''} />
         </Routes>
-      </div>
+      </main>
     </div>
   );
 }
