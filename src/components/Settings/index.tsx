@@ -4,26 +4,19 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 import { Language, Theme } from '../../types/common';
 import { ISettingOption } from './types';
 
 function Settings(): JSX.Element {
-  const [theme, setTheme] = useState<Theme>(Theme.LightTheme);
   const [language, setLanguage] = useState<Language>(Language.English);
-
-  const handleChangeTheme = (event: SelectChangeEvent): void => {
-    setTheme(event.target.value as Theme);
-  };
-
-  const handleChangeLanguage = (event: SelectChangeEvent): void => {
-    setLanguage(event.target.value as Language);
-  };
+  const [theme, setTheme] = useState<Theme>(Theme.LightTheme);
 
   const settingsOptions: ISettingOption[] = [
     {
       title: 'Theme',
       value: theme,
-      onChange: handleChangeTheme,
+      onChange: setTheme,
       items: [
         { item: Theme.LightTheme, itemTitle: 'Light theme' },
         { item: Theme.DarkTheme, itemTitle: 'Dark theme' },
@@ -32,7 +25,7 @@ function Settings(): JSX.Element {
     {
       title: 'Language',
       value: language,
-      onChange: handleChangeLanguage,
+      onChange: setLanguage,
       items: [
         { item: Language.English, itemTitle: 'English' },
         { item: Language.Russian, itemTitle: 'Русский' },
@@ -52,7 +45,9 @@ function Settings(): JSX.Element {
                 id="demo-simple-select"
                 value={value}
                 label={title}
-                onChange={onChange}
+                onChange={e =>
+                  onChange(e.target.value as unknown as SelectChangeEvent<string>)
+                }
               >
                 {items.map(({ item, itemTitle }) => {
                   return (

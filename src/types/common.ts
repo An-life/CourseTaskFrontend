@@ -5,5 +5,5 @@ export enum Theme {
 
 export enum Language {
   English = 'en',
-  Russian = 'tu',
+  Russian = 'ru',
 }

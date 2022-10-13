@@ -14,7 +14,7 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 
 import Settings from '../Settings';
-import Login from '../Registration/Login';
+import Registration from '../Registration';
 
 import styles from './styles.module.scss';
 
@@ -90,11 +90,7 @@ function Nav(): JSX.Element {
           open={isOpenedDrawer}
           onClose={toggleDrawer(drawerContent, false)}
         >
-          <Box
-            sx={{ width: 300 }}
-            role="presentation"
-            onKeyDown={toggleDrawer(drawerContent, false)}
-          >
+          <Box sx={{ width: 300 }} role="presentation">
             <IconButton
               aria-label="close"
               onClick={toggleDrawer(drawerContent, false)}
@@ -102,16 +98,7 @@ function Nav(): JSX.Element {
             >
               <CloseIcon fontSize="medium" />
             </IconButton>
-            {drawerContent === 'login' && (
-              <List>
-                <Login />
-              </List>
-            )}
-            {drawerContent === 'settings' && (
-              <List>
-                <Settings />
-              </List>
-            )}
+            <List>{drawerContent === 'login' ? <Registration /> : <Settings />}</List>
           </Box>
         </Drawer>
       </React.Fragment>
