@@ -1,3 +1,5 @@
-export interface Props {
-  onClick: () => void;
+export interface SignInInputs {
+  name?: string;
+  email: string;
+  password: string;
 }
