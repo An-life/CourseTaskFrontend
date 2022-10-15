@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -14,13 +14,16 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
 
-import { DrawerContent } from './types';
+import { Context } from '../../context/settingsContext';
+import { DrawerContent, SettingsProps } from './types';
 import Registration from '../Registration';
 import Settings from '../Settings';
 
 import styles from './styles.module.scss';
 
-function Nav(): JSX.Element {
+function Nav({ changeSettings }: SettingsProps): JSX.Element {
+  const { theme } = useContext(Context);
+  console.log(theme, 'nav');
   const navigate = useNavigate();
   const [isOpenedDrawer, setIsOpenedDrawer] = useState(false);
   const [drawerContent, setDrawerContent] = useState<DrawerContent>('settings');
@@ -115,7 +118,13 @@ function Nav(): JSX.Element {
             >
               <CloseIcon fontSize="medium" />
             </IconButton>
-            <List>{drawerContent === 'login' ? <Registration /> : <Settings />}</List>
+            <List>
+              {drawerContent === 'login' ? (
+                <Registration />
+              ) : (
+                <Settings changeSettings={changeSettings} />
+              )}
+            </List>
           </Box>
         </Drawer>
       </React.Fragment>

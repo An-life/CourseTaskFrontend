@@ -7,3 +7,8 @@ export enum Language {
   English = 'en',
   Russian = 'ru',
 }
+
+export interface Settings {
+  theme: Theme;
+  language: Language;
+}

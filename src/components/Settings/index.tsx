@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 
 import { Language, Theme } from '../../types/common';
 import { ISettingOption } from './types';
+import { SettingsProps } from '../Nav/types';
 
-function Settings(): JSX.Element {
-  const [language, setLanguage] = useState<Language>(Language.English);
-  const [theme, setTheme] = useState<Theme>(Theme.LightTheme);
+function Settings({ changeSettings }: SettingsProps): JSX.Element {
+  const [language, setLanguage] = useState<Language | string>('');
+  const [theme, setTheme] = useState<Theme | string>('');
+
+  useEffect(() => {
+    const themeSetting = theme !== '' ? theme : Theme.LightTheme;
+    const languageSettings = language !== '' ? language : Language.English;
+    changeSettings(themeSetting as Theme, languageSettings as Language);
+  }, [theme, language]);
 
   const settingsOptions: ISettingOption[] = [
     {
@@ -45,9 +52,7 @@ function Settings(): JSX.Element {
                 id="demo-simple-select"
                 value={value}
                 label={title}
-                onChange={e =>
-                  onChange(e.target.value as unknown as SelectChangeEvent<string>)
-                }
+                onChange={e => onChange(e.target.value)}
               >
                 {items.map(({ item, itemTitle }) => {
                   return (

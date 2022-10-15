@@ -16,7 +16,7 @@ import styles from './styles.module.scss';
 
 function AdminPanel(): JSX.Element {
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
-  console.log(selectionModel);
+
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID' },
     { field: 'name', headerName: ' Name' },
