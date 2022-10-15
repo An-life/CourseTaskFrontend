@@ -6,12 +6,26 @@
 
   .header {
     width: 100%;
-    background-color: $color-blue-light;
     height: auto;
+  }
+
+  .lightHeader {
+    background-color: $color-blue-light;
+  }
+
+  .darkHeader {
+    background-color: $color-blue-dark;
   }
 
   .main {
     max-width: 100%;
-    background-color: $color-white;
   }
+}
+
+.light {
+  background-color: $color-blue-white ;
+}
+
+.dark {
+  background-color: $color-blue-black;
 }

@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CloseIcon from '@mui/icons-material/Close';
 import Drawer from '@mui/material/Drawer';
+import { FormattedMessage } from 'react-intl';
 import HomeIcon from '@mui/icons-material/Home';
 import IconButton from '@mui/material/IconButton';
 import LoginIcon from '@mui/icons-material/Login';
@@ -13,6 +14,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
+import { amber } from '@mui/material/colors';
 
 import { Context } from '../../context/settingsContext';
 import { DrawerContent, SettingsProps } from './types';
@@ -51,83 +53,88 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
       <Container fixed sx={{ maxWidth: 'xl' }}>
         <div className={styles.container}>
           <div>
-            <Tooltip title="Home page">
+            <Tooltip title={<FormattedMessage id="nav_home" />}>
               <IconButton
                 aria-label="delete"
                 onClick={() => {
                   navigate('');
                 }}
               >
-                <HomeIcon fontSize="large" />
+                <HomeIcon fontSize="large" sx={{ color: amber[500] }} />
               </IconButton>
             </Tooltip>
             {user && (
-              <Tooltip title="User page">
+              <Tooltip title={<FormattedMessage id="nav_user" />}>
                 <IconButton aria-label="delete">
-                  <PersonIcon fontSize="large" />
+                  <PersonIcon fontSize="large" sx={{ color: amber[500] }} />
                 </IconButton>
               </Tooltip>
             )}
             {admin && (
-              <Tooltip title="Admin page">
+              <Tooltip title={<FormattedMessage id="nav_admin" />}>
                 <IconButton
                   aria-label="delete"
                   onClick={() => {
                     navigate('/adminPanel');
                   }}
                 >
-                  <AdminPanelSettingsIcon fontSize="large" />
+                  <AdminPanelSettingsIcon fontSize="large" sx={{ color: amber[500] }} />
                 </IconButton>
               </Tooltip>
             )}
           </div>
           <div>
-            <Tooltip title="Settings">
+            <Tooltip title={<FormattedMessage id="nav_settings" />}>
               <IconButton aria-label="delete" onClick={toggleDrawer('settings', true)}>
-                <SettingsIcon fontSize="large" />
+                <SettingsIcon fontSize="large" sx={{ color: amber[500] }} />
               </IconButton>
             </Tooltip>
             {!user && !admin && (
-              <Tooltip title="Sign in">
+              <Tooltip title={<FormattedMessage id="nav_signin" />}>
                 <IconButton aria-label="delete" onClick={toggleDrawer('login', true)}>
-                  <LoginIcon fontSize="large" />
+                  <LoginIcon fontSize="large" sx={{ color: amber[500] }} />
                 </IconButton>
               </Tooltip>
             )}
             {(user || admin) && (
-              <Tooltip title="Log out">
+              <Tooltip title={<FormattedMessage id="nav_logout" />}>
                 <IconButton aria-label="delete">
-                  <LogoutIcon fontSize="large" />
+                  <LogoutIcon fontSize="large" sx={{ color: amber[500] }} />
                 </IconButton>
               </Tooltip>
             )}
           </div>
         </div>
       </Container>
-      <React.Fragment key={'right'}>
-        <Drawer
-          anchor={'right'}
-          open={isOpenedDrawer}
-          onClose={toggleDrawer(drawerContent, false)}
-        >
-          <Box sx={{ width: 300 }} role="presentation">
-            <IconButton
-              aria-label="close"
-              onClick={toggleDrawer(drawerContent, false)}
-              sx={{ margin: '0px 5px 0px  250px' }}
-            >
-              <CloseIcon fontSize="medium" />
-            </IconButton>
-            <List>
-              {drawerContent === 'login' ? (
-                <Registration />
-              ) : (
-                <Settings changeSettings={changeSettings} />
-              )}
-            </List>
-          </Box>
-        </Drawer>
-      </React.Fragment>
+      <Drawer
+        anchor={'right'}
+        open={isOpenedDrawer}
+        onClose={toggleDrawer(drawerContent, false)}
+      >
+        <Box sx={{ width: 300 }} role="presentation">
+          <IconButton
+            aria-label="close"
+            onClick={toggleDrawer(drawerContent, false)}
+            sx={{ margin: '0px 5px 0px  250px' }}
+          >
+            <CloseIcon fontSize="medium" />
+          </IconButton>
+          <h3 className={styles.title}>
+            {drawerContent === 'login' ? (
+              <FormattedMessage id="drawer_registration" />
+            ) : (
+              <FormattedMessage id="drawer_settings" />
+            )}
+          </h3>
+          <List>
+            {drawerContent === 'login' ? (
+              <Registration />
+            ) : (
+              <Settings changeSettings={changeSettings} />
+            )}
+          </List>
+        </Box>
+      </Drawer>
     </>
   );
 }

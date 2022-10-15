@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import Box from '@mui/material/Box';
 import BlockIcon from '@mui/icons-material/Block';
 import Container from '@mui/material/Container';
+import classNames from 'classnames';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
+import { FormattedMessage } from 'react-intl';
 import IconButton from '@mui/material/IconButton';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import Tooltip from '@mui/material/Tooltip';
 
 import { ButtonOptions } from './types';
+import { Context } from '../../context/settingsContext';
+import { Theme } from '../../types/common';
 
 import styles from './styles.module.scss';
 
 function AdminPanel(): JSX.Element {
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+  const { theme } = useContext(Context);
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID' },
-    { field: 'name', headerName: ' Name' },
+    { field: 'name', headerName: 'Name' },
     { field: 'email', headerName: 'Email' },
     { field: 'role', headerName: 'Role' },
     {
@@ -40,16 +45,33 @@ function AdminPanel(): JSX.Element {
   };
 
   const buttonOptions: ButtonOptions[] = [
-    { title: 'Delete user/users', icon: <DeleteIcon />, onClick: onClickHandler },
-    { title: 'Block user/users', icon: <PersonOffIcon />, onClick: onClickHandler },
-    { title: 'Activate user/users', icon: <PersonAddIcon />, onClick: onClickHandler },
     {
-      title: 'Add admin role for user/users',
+      id: 1,
+      title: <FormattedMessage id="admin_delete" />,
+      icon: <DeleteIcon />,
+      onClick: onClickHandler,
+    },
+    {
+      id: 2,
+      title: <FormattedMessage id="admin_block" />,
+      icon: <PersonOffIcon />,
+      onClick: onClickHandler,
+    },
+    {
+      id: 3,
+      title: <FormattedMessage id="admin_activate" />,
+      icon: <PersonAddIcon />,
+      onClick: onClickHandler,
+    },
+    {
+      id: 4,
+      title: <FormattedMessage id="admin_add" />,
       icon: <AdminPanelSettingsIcon />,
       onClick: onClickHandler,
     },
     {
-      title: 'Take away admin role for user/users',
+      id: 5,
+      title: <FormattedMessage id="admin_takeAway" />,
       icon: <BlockIcon />,
       onClick: onClickHandler,
     },
@@ -57,6 +79,14 @@ function AdminPanel(): JSX.Element {
 
   return (
     <Container fixed sx={{ maxWidth: 'xl' }}>
+      <h2
+        className={classNames({
+          [styles.light]: theme === Theme.LightTheme,
+          [styles.dark]: theme === Theme.DarkTheme,
+        })}
+      >
+        <FormattedMessage id="admin_users" />
+      </h2>
       <Box
         sx={{
           display: 'flex',
@@ -67,9 +97,9 @@ function AdminPanel(): JSX.Element {
           },
         }}
       >
-        {buttonOptions.map(({ title, icon, onClick }) => {
+        {buttonOptions.map(({ id, title, icon, onClick }) => {
           return (
-            <Tooltip title={title} key={title}>
+            <Tooltip title={title} key={id}>
               <IconButton onClick={onClick}>{icon}</IconButton>
             </Tooltip>
           );

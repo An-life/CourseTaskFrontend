@@ -1,5 +1,9 @@
 @import './../../styles/mixins.scss';
 
-.container{
-@include flex(space-between, center, row);
+.container {
+  @include flex(space-between, center, row);
+}
+
+.title {
+  padding: 0 35px;
 }
