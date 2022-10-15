@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
-import IconButton from '@mui/material/IconButton';
-import HomeIcon from '@mui/icons-material/Home';
-import Container from '@mui/material/Container';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PersonIcon from '@mui/icons-material/Person';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import CloseIcon from '@mui/icons-material/Close';
+import Drawer from '@mui/material/Drawer';
+import HomeIcon from '@mui/icons-material/Home';
+import IconButton from '@mui/material/IconButton';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
-import CloseIcon from '@mui/icons-material/Close';
-import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Tooltip from '@mui/material/Tooltip';
+import { useNavigate } from 'react-router-dom';
 
-import Settings from '../Settings';
+import { DrawerContent } from './types';
 import Registration from '../Registration';
+import Settings from '../Settings';
 
 import styles from './styles.module.scss';
 
-type DrawerContent = 'login' | 'settings';
-
 function Nav(): JSX.Element {
   const navigate = useNavigate();
-
-  const user = false;
-  const admin = false;
   const [isOpenedDrawer, setIsOpenedDrawer] = useState(false);
   const [drawerContent, setDrawerContent] = useState<DrawerContent>('settings');
+
+  const user = false;
+  const admin = true;
 
   const toggleDrawer =
     (type: DrawerContent, open: boolean) =>
@@ -48,38 +48,55 @@ function Nav(): JSX.Element {
       <Container fixed sx={{ maxWidth: 'xl' }}>
         <div className={styles.container}>
           <div>
-            <IconButton
-              aria-label="delete"
-              onClick={() => {
-                navigate('');
-              }}
-            >
-              <HomeIcon fontSize="large" />
-            </IconButton>
-            {user && (
-              <IconButton aria-label="delete">
-                <PersonIcon fontSize="large" />
+            <Tooltip title="Home page">
+              <IconButton
+                aria-label="delete"
+                onClick={() => {
+                  navigate('');
+                }}
+              >
+                <HomeIcon fontSize="large" />
               </IconButton>
+            </Tooltip>
+            {user && (
+              <Tooltip title="User page">
+                <IconButton aria-label="delete">
+                  <PersonIcon fontSize="large" />
+                </IconButton>
+              </Tooltip>
             )}
             {admin && (
-              <IconButton aria-label="delete">
-                <AdminPanelSettingsIcon fontSize="large" />
-              </IconButton>
+              <Tooltip title="Admin page">
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => {
+                    navigate('/adminPanel');
+                  }}
+                >
+                  <AdminPanelSettingsIcon fontSize="large" />
+                </IconButton>
+              </Tooltip>
             )}
           </div>
           <div>
-            <IconButton aria-label="delete" onClick={toggleDrawer('settings', true)}>
-              <SettingsIcon fontSize="large" />
-            </IconButton>
-            {!user && !admin && (
-              <IconButton aria-label="delete" onClick={toggleDrawer('login', true)}>
-                <LoginIcon fontSize="large" />
+            <Tooltip title="Settings">
+              <IconButton aria-label="delete" onClick={toggleDrawer('settings', true)}>
+                <SettingsIcon fontSize="large" />
               </IconButton>
+            </Tooltip>
+            {!user && !admin && (
+              <Tooltip title="Sign in">
+                <IconButton aria-label="delete" onClick={toggleDrawer('login', true)}>
+                  <LoginIcon fontSize="large" />
+                </IconButton>
+              </Tooltip>
             )}
             {(user || admin) && (
-              <IconButton aria-label="delete">
-                <LogoutIcon fontSize="large" />
-              </IconButton>
+              <Tooltip title="Log out">
+                <IconButton aria-label="delete">
+                  <LogoutIcon fontSize="large" />
+                </IconButton>
+              </Tooltip>
             )}
           </div>
         </div>

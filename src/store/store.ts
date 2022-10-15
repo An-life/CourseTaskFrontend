@@ -9,8 +9,12 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 
+import { settingsReducer } from './settings/settingsSlice';
+
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    settings: settingsReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

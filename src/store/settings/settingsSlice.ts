@@ -2,27 +2,25 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+import { ISettingsState } from './types';
 import { Theme } from '../../types/common';
 
-export interface IThemeState {
-  theme: Theme;
-}
-
-const initialState: IThemeState = {
+const initialState: ISettingsState = {
   theme: Theme.LightTheme,
 };
 
-const themeSlice = createSlice({
-  name: 'theme',
+const settingsSlice = createSlice({
+  name: 'settings',
   initialState,
   reducers: {
-    setTheme: (
+    setSettings: (
       state,
       action: PayloadAction<{
         theme: Theme;
       }>,
     ) => {
-      state.theme = action.payload.theme;
+      state = { theme: action.payload.theme };
+      console.log(state, 'red');
     },
   },
 });
@@ -32,6 +30,6 @@ const persistConfig = {
   storage,
 };
 
-export const lookedReducer = persistReducer(persistConfig, themeSlice.reducer);
+export const settingsReducer = persistReducer(persistConfig, settingsSlice.reducer);
 
-export const { setTheme } = themeSlice.actions;
+export const { setSettings } = settingsSlice.actions;
