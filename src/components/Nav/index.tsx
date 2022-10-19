@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { amber } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,9 +15,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
-import { amber } from '@mui/material/colors';
 
-import { Context } from '../../context/settingsContext';
 import { DrawerContent, SettingsProps } from './types';
 import Registration from '../Registration';
 import Settings from '../Settings';
@@ -24,14 +23,12 @@ import Settings from '../Settings';
 import styles from './styles.module.scss';
 
 function Nav({ changeSettings }: SettingsProps): JSX.Element {
-  const { theme } = useContext(Context);
-  console.log(theme, 'nav');
   const navigate = useNavigate();
   const [isOpenedDrawer, setIsOpenedDrawer] = useState(false);
   const [drawerContent, setDrawerContent] = useState<DrawerContent>('settings');
 
   const user = false;
-  const admin = true;
+  const admin = false;
 
   const toggleDrawer =
     (type: DrawerContent, open: boolean) =>
@@ -55,7 +52,6 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
           <div>
             <Tooltip title={<FormattedMessage id="nav_home" />}>
               <IconButton
-                aria-label="delete"
                 onClick={() => {
                   navigate('');
                 }}
@@ -65,7 +61,11 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
             </Tooltip>
             {user && (
               <Tooltip title={<FormattedMessage id="nav_user" />}>
-                <IconButton aria-label="delete">
+                <IconButton
+                  onClick={() => {
+                    navigate('/userPage');
+                  }}
+                >
                   <PersonIcon fontSize="large" sx={{ color: amber[500] }} />
                 </IconButton>
               </Tooltip>
@@ -85,20 +85,20 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
           </div>
           <div>
             <Tooltip title={<FormattedMessage id="nav_settings" />}>
-              <IconButton aria-label="delete" onClick={toggleDrawer('settings', true)}>
+              <IconButton onClick={toggleDrawer('settings', true)}>
                 <SettingsIcon fontSize="large" sx={{ color: amber[500] }} />
               </IconButton>
             </Tooltip>
             {!user && !admin && (
               <Tooltip title={<FormattedMessage id="nav_signin" />}>
-                <IconButton aria-label="delete" onClick={toggleDrawer('login', true)}>
+                <IconButton onClick={toggleDrawer('login', true)}>
                   <LoginIcon fontSize="large" sx={{ color: amber[500] }} />
                 </IconButton>
               </Tooltip>
             )}
             {(user || admin) && (
               <Tooltip title={<FormattedMessage id="nav_logout" />}>
-                <IconButton aria-label="delete">
+                <IconButton>
                   <LogoutIcon fontSize="large" sx={{ color: amber[500] }} />
                 </IconButton>
               </Tooltip>

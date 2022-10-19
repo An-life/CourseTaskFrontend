@@ -6,11 +6,13 @@ import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { Context } from '../../context/settingsContext';
+import ItemPage from '../ItemPage';
 import { Language, Theme } from '../../types/common';
 import { LOCALES } from '../../i18n/locales';
 import Main from '../Main';
 import { messages } from '../../i18n/messages';
 import Nav from '../Nav';
+import UserPage from '../UserPage';
 import { useSettings } from '../../hooks/useSettings';
 
 import styles from './App.module.scss';
@@ -63,6 +65,8 @@ function App(): JSX.Element {
               <Routes>
                 <Route element={<Main />} path={''} />
                 <Route element={<AdminPanel />} path={'/adminPanel'} />
+                <Route element={<UserPage />} path={'/userPage'} />
+                <Route element={<ItemPage />} path={'/item/:id'} />
               </Routes>
             </main>
           </div>

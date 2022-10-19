@@ -1,24 +1,36 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import TextField from '@mui/material/TextField';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useForm } from 'react-hook-form';
 
-import { SignInInputs } from './types';
+import { IRegistrationInputs } from './types';
 
 import common from './../../styles/commonStyles.module.scss';
 import styles from './styles.module.scss';
 
 function Registration(): JSX.Element {
   const [isRegistered, setIsRegistered] = useState(true);
+  const [showPassword, setShowPassword] = useState(true);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInInputs>();
+  } = useForm<IRegistrationInputs>();
 
-  const onSubmit = (data: SignInInputs): void => console.log(data);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+  };
+
+  const onSubmit = (data: IRegistrationInputs): void => console.log(data);
 
   return (
     <Box
@@ -55,6 +67,7 @@ function Registration(): JSX.Element {
         label="Email"
         type="email"
         variant="outlined"
+        placeholder="Password"
         {...register('email', {
           required: true,
           pattern: {
@@ -70,15 +83,28 @@ function Registration(): JSX.Element {
             : 'This field is required'}
         </span>
       )}
-      <TextField
-        label="Password"
-        type="password"
-        variant="outlined"
-        {...register('password', { required: true })}
-      />
-      {errors.password != null && (
-        <span className={common.errorMessage}>This field is required</span>
-      )}
+      <FormControl variant="outlined">
+        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+        <OutlinedInput
+          label="Password"
+          {...register('password', { required: true })}
+          type={showPassword ? 'text' : 'password'}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+        {errors.password != null && (
+          <span className={common.errorMessage}>This field is required</span>
+        )}
+      </FormControl>
       <div className={styles.buttonContainer}>
         <Button variant="contained" type="submit" size="large">
           Send

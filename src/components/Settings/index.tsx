@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useContext, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+import { Context } from '../../context/settingsContext';
 import { Language, Theme } from '../../types/common';
 import { ISettingOption } from './types';
 import { SettingsProps } from '../Nav/types';
 
 function Settings({ changeSettings }: SettingsProps): JSX.Element {
-  const [language, setLanguage] = useState<Language | string>('');
-  const [theme, setTheme] = useState<Theme | string>('');
+  const { theme, language } = useContext(Context);
+  const [languageSetting, setLanguageSetting] = useState<Language>(language);
+  const [themeSetting, setThemeSetting] = useState<Theme>(theme);
 
   useEffect(() => {
-    const themeSetting = theme !== '' ? theme : Theme.LightTheme;
-    const languageSettings = language !== '' ? language : Language.English;
-    changeSettings(themeSetting as Theme, languageSettings as Language);
-  }, [theme, language]);
+    changeSettings(themeSetting, languageSetting);
+  }, [themeSetting, languageSetting]);
 
   const settingsOptions: ISettingOption[] = [
     {
       title: 'Theme',
       value: theme,
-      onChange: setTheme,
+      onChange: setThemeSetting,
       items: [
         { item: Theme.LightTheme, itemTitle: 'Light theme' },
         { item: Theme.DarkTheme, itemTitle: 'Dark theme' },
@@ -32,7 +32,7 @@ function Settings({ changeSettings }: SettingsProps): JSX.Element {
     {
       title: 'Language',
       value: language,
-      onChange: setLanguage,
+      onChange: setLanguageSetting,
       items: [
         { item: Language.English, itemTitle: 'English' },
         { item: Language.Russian, itemTitle: 'Русский' },
@@ -52,7 +52,11 @@ function Settings({ changeSettings }: SettingsProps): JSX.Element {
                 id="demo-simple-select"
                 value={value}
                 label={title}
-                onChange={e => onChange(e.target.value)}
+                onChange={e =>
+                  onChange(
+                    e.target.value as SetStateAction<Theme> & SetStateAction<Language>,
+                  )
+                }
               >
                 {items.map(({ item, itemTitle }) => {
                   return (

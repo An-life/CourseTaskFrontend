@@ -1,4 +1,4 @@
-export interface SignInInputs {
+export interface IRegistrationInputs {
   name?: string;
   email: string;
   password: string;

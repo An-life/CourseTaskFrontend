@@ -16,6 +16,7 @@ import { ButtonOptions } from './types';
 import { Context } from '../../context/settingsContext';
 import { Theme } from '../../types/common';
 
+import common from './../../styles/commonStyles.module.scss';
 import styles from './styles.module.scss';
 
 function AdminPanel(): JSX.Element {
@@ -81,8 +82,8 @@ function AdminPanel(): JSX.Element {
     <Container fixed sx={{ maxWidth: 'xl' }}>
       <h2
         className={classNames({
-          [styles.light]: theme === Theme.LightTheme,
-          [styles.dark]: theme === Theme.DarkTheme,
+          [common.darkTitles]: theme === Theme.LightTheme,
+          [common.lightTitles]: theme === Theme.DarkTheme,
         })}
       >
         <FormattedMessage id="admin_users" />

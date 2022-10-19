@@ -16,6 +16,9 @@ export const messages = {
     nav_logout: 'Log out',
     drawer_registration: 'Registration',
     drawer_settings: 'Settings',
+    user_page_add: 'Add collection',
+    item_description: 'Description',
+    item_comments: 'Comments',
   },
   [LOCALES.RUSSIAN]: {
     admin_users: 'Управление пользователями',
@@ -32,5 +35,8 @@ export const messages = {
     nav_logout: 'Выйти',
     drawer_registration: 'Регистрация',
     drawer_settings: 'Настройки',
+    user_page_add: 'Добавить коллекцию',
+    item_description: 'Описание',
+    item_comments: 'Комментарии',
   },
 };
