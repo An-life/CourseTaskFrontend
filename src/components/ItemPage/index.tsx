@@ -30,9 +30,9 @@ function ItemPage(): JSX.Element {
 
   return (
     <Container fixed sx={{ maxWidth: 'xl' }}>
-      <Title title="ItemTitle" />
+      <Title>ItemTitle</Title>
       <div className={styles.container}>
-        <Title title="#" />
+        <Title>#</Title>
         <div>
           {tegs.map(teg => (
             <Chip key={teg} label={teg} variant="outlined" />
@@ -51,7 +51,7 @@ function ItemPage(): JSX.Element {
             <FavoriteBorderIcon fontSize="large" sx={{ color: pink[500] }} />
           )}
         </IconButton>
-        <Title title="0" />
+        <Title>0</Title>
       </div>
       <Accordion>
         <AccordionSummary
@@ -66,7 +66,9 @@ function ItemPage(): JSX.Element {
           lacus ex, sit amet blandit leo lobortis eget.
         </AccordionDetails>
       </Accordion>
-      <Title title={<FormattedMessage id="item_comments" />} />
+      <Title>
+        <FormattedMessage id="item_comments" />
+      </Title>
       <TextField fullWidth label="Comments" placeholder="Enter your comment..." />
       <IconButton
         onClick={() => {

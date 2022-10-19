@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import { Language, Settings, Theme } from '../../types/common';
+import { Language, ISettings, Theme } from '../../types/common';
 import { UseSettings } from './types';
 
 export const useSettings = (): UseSettings => {
   const savedSettingsData = localStorage.getItem('settings');
 
-  let initialSettingsData: Settings | null;
+  let initialSettingsData: ISettings | null;
 
   if (savedSettingsData != null) {
     initialSettingsData = JSON.parse(savedSettingsData);
@@ -14,7 +14,7 @@ export const useSettings = (): UseSettings => {
     initialSettingsData = null;
   }
 
-  const [settingsData, setSettingsData] = useState<Settings>(
+  const [settingsData, setSettingsData] = useState<ISettings>(
     initialSettingsData != null
       ? initialSettingsData
       : { theme: Theme.LightTheme, language: Language.English },

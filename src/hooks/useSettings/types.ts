@@ -1,6 +1,6 @@
-import { Language, Settings, Theme } from '../../types/common';
+import { Language, ISettings, Theme } from '../../types/common';
 
 export interface UseSettings {
-  settingsData: Settings;
+  settingsData: ISettings;
   addSettingsData: (theme: Theme, language: Language) => void;
 }

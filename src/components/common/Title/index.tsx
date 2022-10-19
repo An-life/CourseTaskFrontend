@@ -7,7 +7,7 @@ import { TitleProps } from './types';
 
 import common from './../../../styles/commonStyles.module.scss';
 
-function Title({ title }: TitleProps): JSX.Element {
+function Title({ children }: TitleProps): JSX.Element {
   const { theme } = useContext(Context);
   return (
     <h2
@@ -16,7 +16,7 @@ function Title({ title }: TitleProps): JSX.Element {
         [common.lightTitles]: theme === Theme.DarkTheme,
       })}
     >
-      {title}
+      {children}
     </h2>
   );
 }

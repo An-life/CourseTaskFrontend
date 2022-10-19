@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import Box from '@mui/material/Box';
 import BlockIcon from '@mui/icons-material/Block';
 import Container from '@mui/material/Container';
-import classNames from 'classnames';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import { FormattedMessage } from 'react-intl';
@@ -13,15 +12,12 @@ import PersonOffIcon from '@mui/icons-material/PersonOff';
 import Tooltip from '@mui/material/Tooltip';
 
 import { ButtonOptions } from './types';
-import { Context } from '../../context/settingsContext';
-import { Theme } from '../../types/common';
 
-import common from './../../styles/commonStyles.module.scss';
 import styles from './styles.module.scss';
+import Title from '../common/Title';
 
 function AdminPanel(): JSX.Element {
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
-  const { theme } = useContext(Context);
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID' },
@@ -80,14 +76,9 @@ function AdminPanel(): JSX.Element {
 
   return (
     <Container fixed sx={{ maxWidth: 'xl' }}>
-      <h2
-        className={classNames({
-          [common.darkTitles]: theme === Theme.LightTheme,
-          [common.lightTitles]: theme === Theme.DarkTheme,
-        })}
-      >
+      <Title>
         <FormattedMessage id="admin_users" />
-      </h2>
+      </Title>
       <Box
         sx={{
           display: 'flex',

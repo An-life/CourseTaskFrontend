@@ -19,6 +19,9 @@ export const messages = {
     user_page_add: 'Add collection',
     item_description: 'Description',
     item_comments: 'Comments',
+    nav_search: 'Search',
+    main_last: 'Last added items',
+    main_collections: 'The largest collections',
   },
   [LOCALES.RUSSIAN]: {
     admin_users: 'Управление пользователями',
@@ -38,5 +41,8 @@ export const messages = {
     user_page_add: 'Добавить коллекцию',
     item_description: 'Описание',
     item_comments: 'Комментарии',
+    nav_search: 'Поиск',
+    main_last: 'Последние добавленные предметы',
+    main_collections: 'Самые большие коллекции',
   },
 };

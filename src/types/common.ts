@@ -8,7 +8,12 @@ export enum Language {
   Russian = 'ru',
 }
 
-export interface Settings {
+export interface ISettings {
   theme: Theme;
   language: Language;
+}
+
+export interface ITag {
+  value: string;
+  count: number;
 }
