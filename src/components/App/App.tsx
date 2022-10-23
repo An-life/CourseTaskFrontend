@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
-import AdminPanel from '../AdminPanel';
-import classNames from 'classnames';
-import { IntlProvider } from 'react-intl';
 import { Route, Routes } from 'react-router-dom';
+import { IntlProvider } from 'react-intl';
+import classNames from 'classnames';
+
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import AdminPanel from '../AdminPanel';
 import { Context } from '../../context/settingsContext';
 import ItemPage from '../ItemPage';
+import CollectionPage from '../CollectionPage';
 import { Language, Theme } from '../../types/common';
 import { LOCALES } from '../../i18n/locales';
 import Main from '../Main';
@@ -67,6 +69,7 @@ function App(): JSX.Element {
                 <Route element={<AdminPanel />} path={'/adminPanel'} />
                 <Route element={<UserPage />} path={'/userPage'} />
                 <Route element={<ItemPage />} path={'/item/:id'} />
+                <Route element={<CollectionPage />} path={'/collection/:id'} />
               </Routes>
             </main>
           </div>

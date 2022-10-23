@@ -5,12 +5,11 @@ import { TagCloud } from 'react-tagcloud';
 
 import { customTagRenderer } from '../../utils/customTagRender';
 
+import { ITag } from '../../types/common';
+import ItemCard from '../common/ItemCard';
 import Title from '../common/Title';
 
-const data: Array<{
-  value: string;
-  count: number;
-}> = [
+const data: ITag[] = [
   { value: 'jQuery', count: 25 },
   { value: 'MongoDB', count: 18 },
   { value: 'JavaScript', count: 38 },
@@ -37,6 +36,7 @@ function Main(): JSX.Element {
       <Title>
         <FormattedMessage id="main_last" />
       </Title>
+      <ItemCard title="du" cardId="09" />
       <Title>
         <FormattedMessage id="main_collections" />
       </Title>
