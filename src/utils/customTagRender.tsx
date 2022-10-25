@@ -15,7 +15,7 @@ export const customTagRenderer = (
       margin: '3px',
       padding: '3px',
       display: 'inline-block',
-      color: 'white',
+      color: 'orange',
     }}
   >
     {tag.value}

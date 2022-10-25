@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
@@ -12,13 +12,31 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useForm } from 'react-hook-form';
 
 import { IRegistrationInputs } from './types';
+import { useRegistration } from '../../hooks/useRegistration';
+import { useLogin } from '../../hooks/useLogin';
 
 import common from './../../styles/commonStyles.module.scss';
 import styles from './styles.module.scss';
 
-function Registration(): JSX.Element {
+function Registration({
+  closeDrawerMenu,
+  setIsAuth,
+}: {
+  closeDrawerMenu: () => void;
+  setIsAuth: () => void;
+}): JSX.Element {
   const [isRegistered, setIsRegistered] = useState(true);
   const [showPassword, setShowPassword] = useState(true);
+
+  const { setRegistrationData, isSuccessRegistration } = useRegistration();
+  const { setLoginData, isSuccessLogin } = useLogin();
+
+  useEffect(() => {
+    if (isSuccessRegistration === true || isSuccessLogin === true) {
+      closeDrawerMenu();
+      setIsAuth();
+    }
+  }, [isSuccessRegistration, isSuccessLogin]);
 
   const {
     register,
@@ -26,11 +44,17 @@ function Registration(): JSX.Element {
     formState: { errors },
   } = useForm<IRegistrationInputs>();
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  const mouseDownPasswordHandler = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
   };
 
-  const onSubmit = (data: IRegistrationInputs): void => console.log(data);
+  const onSubmitHandler = ({ name, email, password }: IRegistrationInputs): void => {
+    if (!isRegistered) {
+      setRegistrationData({ name, email, password });
+    } else {
+      setLoginData({ email, password });
+    }
+  };
 
   return (
     <Box
@@ -41,7 +65,7 @@ function Registration(): JSX.Element {
       }}
       noValidate
       autoComplete="off"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmitHandler)}
     >
       {!isRegistered && (
         <TextField
@@ -93,7 +117,7 @@ function Registration(): JSX.Element {
             <InputAdornment position="end">
               <IconButton
                 onClick={() => setShowPassword(!showPassword)}
-                onMouseDown={handleMouseDownPassword}
+                onMouseDown={mouseDownPasswordHandler}
                 edge="end"
               >
                 {showPassword ? <VisibilityOff /> : <Visibility />}

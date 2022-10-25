@@ -46,9 +46,7 @@ function Main(): JSX.Element {
         tags={data}
         className="simple-cloud"
         renderer={customTagRenderer}
-        onClick={(tag: { value: string; count: number }) =>
-          alert(`'${tag.value}' was selected!`)
-        }
+        onClick={(tag: ITag) => alert(`'${tag.value}' was selected!`)}
       />
     </Container>
   );

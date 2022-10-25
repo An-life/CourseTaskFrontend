@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -16,13 +15,13 @@ interface IItemCard {
 const ItemCard = ({ cardId, title }: IItemCard): JSX.Element => {
   const navigate = useNavigate();
 
-  const handleNavigateClick = (id: string): void => {
+  const navigateClickHandler = (id: string): void => {
     navigate(`/item/${id}`);
   };
 
   return (
     <Card sx={{ maxWidth: 250 }}>
-      <CardHeader title={title} onClick={handleNavigateClick(cardId)} />
+      <CardHeader title={title} onClick={navigateClickHandler(cardId)} />
       <CardMedia component="img" height="150" image={noImage} alt="image" />
       <Typography variant="body2" color="text.secondary">
         Author: Me

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Autocomplete from '@mui/material/Autocomplete';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { amber } from '@mui/material/colors';
 import Box from '@mui/material/Box';
@@ -15,6 +16,7 @@ import Modal from '@mui/material/Modal';
 import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
 import SettingsIcon from '@mui/icons-material/Settings';
+import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,9 +25,6 @@ import Registration from '../Registration';
 import Settings from '../Settings';
 
 import styles from './styles.module.scss';
-
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -44,9 +43,17 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
   const [isOpenedDrawer, setIsOpenedDrawer] = useState(false);
   const [drawerContent, setDrawerContent] = useState<DrawerContent>('settings');
   const [isOpenedSearch, setIsOpenedSearch] = useState(false);
+  const [isAuth, setIsAuth] = useState<boolean>(
+    localStorage.getItem('token') === undefined || false,
+  );
 
   const user = false;
   const admin = false;
+
+  const logoutHandler = (): void => {
+    localStorage.removeItem('token');
+    setIsAuth(false);
+  };
 
   const toggleDrawer =
     (type: DrawerContent, open: boolean) =>
@@ -112,16 +119,16 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
                 <SettingsIcon fontSize="large" sx={{ color: amber[500] }} />
               </IconButton>
             </Tooltip>
-            {!user && !admin && (
+            {!isAuth && (
               <Tooltip title={<FormattedMessage id="nav_signin" />}>
                 <IconButton onClick={toggleDrawer('login', true)}>
                   <LoginIcon fontSize="large" sx={{ color: amber[500] }} />
                 </IconButton>
               </Tooltip>
             )}
-            {(user || admin) && (
+            {isAuth && (
               <Tooltip title={<FormattedMessage id="nav_logout" />}>
-                <IconButton>
+                <IconButton onClick={logoutHandler}>
                   <LogoutIcon fontSize="large" sx={{ color: amber[500] }} />
                 </IconButton>
               </Tooltip>
@@ -151,7 +158,10 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
           </h3>
           <List>
             {drawerContent === 'login' ? (
-              <Registration />
+              <Registration
+                closeDrawerMenu={() => setIsOpenedDrawer(false)}
+                setIsAuth={() => setIsAuth(true)}
+              />
             ) : (
               <Settings changeSettings={changeSettings} />
             )}

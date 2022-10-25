@@ -9,6 +9,7 @@ import common from './../../../styles/commonStyles.module.scss';
 
 function Title({ children }: TitleProps): JSX.Element {
   const { theme } = useContext(Context);
+
   return (
     <h2
       className={classNames({
