@@ -15,8 +15,9 @@ import Main from '../Main';
 import { messages } from '../../i18n/messages';
 import Nav from '../Nav';
 import UserPage from '../UserPage';
-import { useSettings } from '../../hooks/useSettings';
+
 import { useGetMeQuery } from './../../api/authApi';
+import { useSettings } from '../../hooks/useSettings';
 
 import styles from './App.module.scss';
 

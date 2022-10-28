@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,14 +17,11 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import { IRegistrationInputs, IRegistration } from './types';
+import { useLogin } from './../../hooks/useLogin';
 import { useRegistration } from '../../hooks/useRegistration';
-import { useLogin } from '../../hooks/useLogin';
 
 import common from './../../styles/commonStyles.module.scss';
 import styles from './styles.module.scss';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function Registration({ closeDrawerMenu, setIsAuth }: IRegistration): JSX.Element {
   const [isRegistered, setIsRegistered] = useState(true);
