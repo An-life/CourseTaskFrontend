@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useNavigate } from 'react-router-dom';
+
 import Autocomplete from '@mui/material/Autocomplete';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { amber } from '@mui/material/colors';
@@ -6,7 +9,6 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CloseIcon from '@mui/icons-material/Close';
 import Drawer from '@mui/material/Drawer';
-import { FormattedMessage } from 'react-intl';
 import HomeIcon from '@mui/icons-material/Home';
 import IconButton from '@mui/material/IconButton';
 import LoginIcon from '@mui/icons-material/Login';
@@ -18,7 +20,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
-import { useNavigate } from 'react-router-dom';
 
 import { DrawerContent, SettingsProps } from './types';
 import Registration from '../Registration';
@@ -44,11 +45,10 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
   const [drawerContent, setDrawerContent] = useState<DrawerContent>('settings');
   const [isOpenedSearch, setIsOpenedSearch] = useState(false);
   const [isAuth, setIsAuth] = useState<boolean>(
-    localStorage.getItem('token') === undefined || false,
+    localStorage.getItem('token') !== undefined || false,
   );
 
-  const user = false;
-  const admin = false;
+  const admin = true;
 
   const logoutHandler = (): void => {
     localStorage.removeItem('token');
@@ -84,7 +84,7 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
                 <HomeIcon fontSize="large" sx={{ color: amber[500] }} />
               </IconButton>
             </Tooltip>
-            {user && (
+            {isAuth && (
               <Tooltip title={<FormattedMessage id="nav_user" />}>
                 <IconButton
                   onClick={() => {
@@ -95,7 +95,7 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
                 </IconButton>
               </Tooltip>
             )}
-            {admin && (
+            {admin && isAuth && (
               <Tooltip title={<FormattedMessage id="nav_admin" />}>
                 <IconButton
                   aria-label="delete"

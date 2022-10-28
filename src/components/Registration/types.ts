@@ -3,3 +3,8 @@ export interface IRegistrationInputs {
   email: string;
   password: string;
 }
+
+export interface IRegistration {
+  closeDrawerMenu: () => void;
+  setIsAuth: () => void;
+}

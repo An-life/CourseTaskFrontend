@@ -19,6 +19,7 @@
   },
   "plugins": ["react"],
   "rules": {
+    "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/no-invalid-void-type": "off",
     "@typescript-eslint/no-misused-promises": [
       "error",

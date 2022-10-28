@@ -1,7 +1,8 @@
 import React from 'react';
-import Container from '@mui/material/Container';
 import { FormattedMessage } from 'react-intl';
 import { TagCloud } from 'react-tagcloud';
+
+import Container from '@mui/material/Container';
 
 import { customTagRenderer } from '../../utils/customTagRender';
 

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useForm } from 'react-hook-form';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import FormControl from '@mui/material/FormControl';
 import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,27 +13,28 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useForm } from 'react-hook-form';
 
-import { IRegistrationInputs } from './types';
+import { IRegistrationInputs, IRegistration } from './types';
 import { useRegistration } from '../../hooks/useRegistration';
 import { useLogin } from '../../hooks/useLogin';
 
 import common from './../../styles/commonStyles.module.scss';
 import styles from './styles.module.scss';
 
-function Registration({
-  closeDrawerMenu,
-  setIsAuth,
-}: {
-  closeDrawerMenu: () => void;
-  setIsAuth: () => void;
-}): JSX.Element {
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+function Registration({ closeDrawerMenu, setIsAuth }: IRegistration): JSX.Element {
   const [isRegistered, setIsRegistered] = useState(true);
   const [showPassword, setShowPassword] = useState(true);
 
-  const { setRegistrationData, isSuccessRegistration } = useRegistration();
-  const { setLoginData, isSuccessLogin } = useLogin();
+  const {
+    registration,
+    isSuccessRegistration,
+    isLoadingRegistration,
+    registrationError,
+  } = useRegistration();
+  const { login, isSuccessLogin, isLoadingLogin, loginError } = useLogin();
 
   useEffect(() => {
     if (isSuccessRegistration === true || isSuccessLogin === true) {
@@ -48,11 +53,19 @@ function Registration({
     event.preventDefault();
   };
 
+  if (loginError) {
+    toast(loginError.data.message);
+  }
+
+  if (registrationError) {
+    toast(registrationError.data.message);
+  }
+
   const onSubmitHandler = ({ name, email, password }: IRegistrationInputs): void => {
     if (!isRegistered) {
-      setRegistrationData({ name, email, password });
+      registration({ name, email, password });
     } else {
-      setLoginData({ email, password });
+      login({ email, password });
     }
   };
 
@@ -130,16 +143,40 @@ function Registration({
         )}
       </FormControl>
       <div className={styles.buttonContainer}>
-        <Button variant="contained" type="submit" size="large">
-          Send
-        </Button>
+        {isLoadingLogin || isLoadingRegistration ? (
+          <CircularProgress />
+        ) : (
+          <Button variant="contained" type="submit" size="large">
+            <FormattedMessage id="registration_send" />
+          </Button>
+        )}
       </div>
       <div>
         <Button variant="text" onClick={() => setIsRegistered(!isRegistered)}>
-          {isRegistered ? 'Sign up' : 'Sign in'}
+          {isRegistered ? (
+            <FormattedMessage id="registration_signup" />
+          ) : (
+            <FormattedMessage id="registration_signin" />
+          )}
         </Button>
-        {isRegistered ? ', if you don`t have account' : ', if you have account'}
+        {isRegistered ? (
+          <FormattedMessage id="registration_not_acount" />
+        ) : (
+          <FormattedMessage id="registration_acount" />
+        )}
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Box>
   );
 }

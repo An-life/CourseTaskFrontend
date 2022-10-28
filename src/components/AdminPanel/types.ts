@@ -1,6 +1,15 @@
 export interface ButtonOptions {
   id: number;
   title: JSX.Element;
+  value: string;
   icon: JSX.Element;
-  onClick: () => void;
+  onClick: (value: string) => void;
+}
+
+export interface IUsersData {
+  id: string;
+  name: string;
+  email: string;
+  status: 'active' | 'blocked';
+  role: 'user' | 'admin';
 }

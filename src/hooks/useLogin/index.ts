@@ -1,26 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { usePostLoginQuery } from '../../api/authApi';
-import { IRegistrationData } from '../../types/common';
+import { usePostLoginMutation } from '../../api/authApi';
 
 export const useLogin = (): any => {
-  const [loginData, setLoginData] = useState<IRegistrationData>({
-    email: '',
-    password: '',
-  });
-  console.log(loginData);
-  const isSendLoginRequest = Object.values(loginData).every(value => value !== '');
+  const [login, { data, isSuccess, isLoading, error }] = usePostLoginMutation();
 
-  const { data, isSuccess } = usePostLoginQuery(loginData, { skip: !isSendLoginRequest });
-
-  console.log(data);
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data) {
       localStorage.setItem('token', data.accessToken);
     }
   }, [isSuccess]);
 
   const isSuccessLogin = isSuccess;
+  const isLoadingLogin = isLoading;
+  const loginError = error;
 
-  return { setLoginData, isSuccessLogin };
+  return { login, isSuccessLogin, isLoadingLogin, loginError };
 };

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -7,7 +9,6 @@ import Container from '@mui/material/Container';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { FormattedMessage } from 'react-intl';
 import IconButton from '@mui/material/IconButton';
 import { pink } from '@mui/material/colors';
 import SendIcon from '@mui/icons-material/Send';

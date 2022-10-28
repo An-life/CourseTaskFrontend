@@ -64,11 +64,21 @@ export interface ICollection {
 }
 
 export interface IUserResponse {
+  userId: string;
   name: string;
   email: string;
   password: string;
   status: 'active' | 'blocked';
   role: 'user' | 'admin';
-  activationLink: string;
   collections: ICollection[];
+}
+
+export interface IChangeStatus {
+  users: string[];
+  status: 'active' | 'blocked';
+}
+
+export interface IChangeRole {
+  users: string[];
+  role: 'admin' | 'user';
 }

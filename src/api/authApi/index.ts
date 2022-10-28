@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import {
+  IChangeRole,
+  IChangeStatus,
   IRegistrationData,
   IRegistrationResponse,
   IUserResponse,
@@ -19,25 +21,63 @@ export const authApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Users'],
   endpoints: build => ({
-    postRegistration: build.query<IRegistrationResponse, IRegistrationData>({
+    postRegistration: build.mutation<IRegistrationResponse, IRegistrationData>({
       query: ({ ...registrationData }) => ({
         url: 'registration',
         method: 'POST',
         body: registrationData,
+        invalidatesTags: ['Users'],
       }),
     }),
-    postLogin: build.query<IRegistrationResponse, IRegistrationData>({
+    postLogin: build.mutation<IRegistrationResponse, IRegistrationData>({
       query: ({ ...loginData }) => ({
         url: 'login',
         method: 'POST',
         body: loginData,
       }),
     }),
+    deleteUsers: build.mutation<{}, string[]>({
+      query: deletedUsers => ({
+        url: 'deleteUsers',
+        method: 'POST',
+        body: { users: [...deletedUsers] },
+      }),
+      invalidatesTags: ['Users'],
+    }),
+    changeUsersStatus: build.mutation<{}, IChangeStatus>({
+      query: changedData => ({
+        url: 'changeUsersStatus',
+        method: 'POST',
+        body: { ...changedData },
+      }),
+      invalidatesTags: ['Users'],
+    }),
+    changeUsersRole: build.mutation<{}, IChangeRole>({
+      query: changedData => ({
+        url: 'changeUsersRole',
+        method: 'POST',
+        body: { ...changedData },
+      }),
+      invalidatesTags: ['Users'],
+    }),
     getMe: build.query<IUserResponse, void>({
       query: () => 'me',
+    }),
+    getUsers: build.query<IUserResponse[], void>({
+      query: () => 'users',
+      providesTags: () => ['Users'],
     }),
   }),
 });
 
-export const { usePostRegistrationQuery, usePostLoginQuery, useGetMeQuery } = authApi;
+export const {
+  useChangeUsersRoleMutation,
+  useChangeUsersStatusMutation,
+  useDeleteUsersMutation,
+  useGetMeQuery,
+  useGetUsersQuery,
+  usePostRegistrationMutation,
+  usePostLoginMutation,
+} = authApi;

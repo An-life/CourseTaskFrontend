@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -7,11 +8,8 @@ import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 
 import noImage from './../../../assets/images/noImage.png';
+import { IItemCard } from './types';
 
-interface IItemCard {
-  cardId: string;
-  title: string;
-}
 const ItemCard = ({ cardId, title }: IItemCard): JSX.Element => {
   const navigate = useNavigate();
 

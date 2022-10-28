@@ -22,6 +22,11 @@ export const messages = {
     nav_search: 'Search',
     main_last: 'Last added items',
     main_collections: 'The largest collections',
+    registration_signup: 'Sign up',
+    registration_signin: 'Sign in',
+    registration_not_acount: ', if you don`t have account',
+    registration_acount: ', if you have account',
+    registration_send: 'Send',
   },
   [LOCALES.RUSSIAN]: {
     admin_users: 'Управление пользователями',
@@ -44,5 +49,10 @@ export const messages = {
     nav_search: 'Поиск',
     main_last: 'Последние добавленные предметы',
     main_collections: 'Самые большие коллекции',
+    registration_signup: 'Зарегистрируйтесь',
+    registration_signin: 'Войдите',
+    registration_not_acount: ', если нет акаунта',
+    registration_acount: ', если есть акаунт',
+    registration_send: 'Отправить',
   },
 };
