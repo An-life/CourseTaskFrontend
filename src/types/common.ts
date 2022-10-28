@@ -27,7 +27,7 @@ export interface IRegistrationResponse {
 export interface IUserRegistrationData {
   id: string;
   role: 'user' | 'admin';
-  status: 'active' | 'blocked';
+  status: 'active' | 'block';
 }
 
 export interface IRegistrationData {
@@ -68,14 +68,14 @@ export interface IUserResponse {
   name: string;
   email: string;
   password: string;
-  status: 'active' | 'blocked';
+  status: 'active' | 'block';
   role: 'user' | 'admin';
   collections: ICollection[];
 }
 
 export interface IChangeStatus {
   users: string[];
-  status: 'active' | 'blocked';
+  status: 'active' | 'block';
 }
 
 export interface IChangeRole {

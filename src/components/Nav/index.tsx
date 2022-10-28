@@ -6,6 +6,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { amber } from '@mui/material/colors';
 import Box from '@mui/material/Box';
+import BlockIcon from '@mui/icons-material/Block';
 import Container from '@mui/material/Container';
 import CloseIcon from '@mui/icons-material/Close';
 import Drawer from '@mui/material/Drawer';
@@ -26,6 +27,8 @@ import Registration from '../Registration';
 import Settings from '../Settings';
 
 import styles from './styles.module.scss';
+import { useSelector } from 'react-redux';
+import { getUserInfo } from '../../store/user/userSelectors';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -48,11 +51,15 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
     localStorage.getItem('token') !== undefined || false,
   );
 
-  const admin = true;
+  const userData = useSelector(getUserInfo);
+
+  const isAdmin = userData.role === 'admin';
+  const isBlocked = userData.status === 'block';
 
   const logoutHandler = (): void => {
     localStorage.removeItem('token');
     setIsAuth(false);
+    navigate('');
   };
 
   const toggleDrawer =
@@ -70,6 +77,11 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
       setDrawerContent(type);
     };
 
+  const blockButtonHandler = (): void => {
+    setIsOpenedDrawer(true);
+    setDrawerContent('login');
+  };
+
   return (
     <>
       <Container fixed sx={{ maxWidth: 'xl' }}>
@@ -84,7 +96,14 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
                 <HomeIcon fontSize="large" sx={{ color: amber[500] }} />
               </IconButton>
             </Tooltip>
-            {isAuth && (
+            {isAuth && isBlocked && (
+              <Tooltip title={<FormattedMessage id="nav_block" />}>
+                <IconButton onClick={blockButtonHandler}>
+                  <BlockIcon fontSize="large" sx={{ color: amber[500] }} />
+                </IconButton>
+              </Tooltip>
+            )}
+            {isAuth && !isBlocked && (
               <Tooltip title={<FormattedMessage id="nav_user" />}>
                 <IconButton
                   onClick={() => {
@@ -95,7 +114,7 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
                 </IconButton>
               </Tooltip>
             )}
-            {admin && isAuth && (
+            {isAdmin && isAuth && !isBlocked && (
               <Tooltip title={<FormattedMessage id="nav_admin" />}>
                 <IconButton
                   aria-label="delete"

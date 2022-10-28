@@ -60,9 +60,8 @@ function AdminPanel(): JSX.Element {
   const changeStatusHandler = async (value: string): Promise<void> => {
     await changeStatus({
       users: selectionModel as string[],
-      status: value as 'active' | 'blocked',
+      status: value as 'active' | 'block',
     });
-    console.log(value, 'status');
   };
 
   const changeRoleHandler = async (value: string): Promise<void> => {
@@ -70,7 +69,6 @@ function AdminPanel(): JSX.Element {
       users: selectionModel as string[],
       role: value as 'admin' | 'user',
     });
-    console.log(value, 'role');
   };
 
   const buttonOptions: ButtonOptions[] = [

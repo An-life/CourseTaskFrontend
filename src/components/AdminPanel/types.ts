@@ -10,6 +10,6 @@ export interface IUsersData {
   id: string;
   name: string;
   email: string;
-  status: 'active' | 'blocked';
+  status: 'active' | 'block';
   role: 'user' | 'admin';
 }
