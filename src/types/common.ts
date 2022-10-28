@@ -64,6 +64,16 @@ export interface ICollection {
 }
 
 export interface IUserResponse {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  status: 'active' | 'block';
+  role: 'user' | 'admin';
+  collections: ICollection[];
+}
+
+export interface IUsersResponse {
   userId: string;
   name: string;
   email: string;

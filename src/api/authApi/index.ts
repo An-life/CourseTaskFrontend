@@ -6,6 +6,7 @@ import {
   IRegistrationData,
   IRegistrationResponse,
   IUserResponse,
+  IUsersResponse,
 } from './../../types/common';
 import { baseUrl } from './../constants';
 
@@ -65,7 +66,7 @@ export const authApi = createApi({
     getMe: build.query<IUserResponse, void>({
       query: () => 'me',
     }),
-    getUsers: build.query<IUserResponse[], void>({
+    getUsers: build.query<IUsersResponse[], void>({
       query: () => 'users',
       providesTags: () => ['Users'],
     }),

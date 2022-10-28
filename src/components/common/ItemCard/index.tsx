@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -10,25 +9,19 @@ import Typography from '@mui/material/Typography';
 import noImage from './../../../assets/images/noImage.png';
 import { IItemCard } from './types';
 
-const ItemCard = ({ cardId, title }: IItemCard): JSX.Element => {
-  const navigate = useNavigate();
-
-  const navigateClickHandler = (id: string): void => {
-    navigate(`/item/${id}`);
-  };
-
+const ItemCard = ({ title }: IItemCard): JSX.Element => {
   return (
     <Card sx={{ maxWidth: 250 }}>
-      <CardHeader title={title} onClick={navigateClickHandler(cardId)} />
+      <CardHeader title={title} />
       <CardMedia component="img" height="150" image={noImage} alt="image" />
       <Typography variant="body2" color="text.secondary">
-        Author: Me
+        <span>Author: Me</span>
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        Collection: Col
+        <span>Collection:</span>
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        Tags:
+        <span>Tags:</span>
         <Chip label="Tag" variant="outlined" />
       </Typography>
     </Card>

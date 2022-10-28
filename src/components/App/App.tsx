@@ -42,7 +42,7 @@ function App(): JSX.Element {
   const { data, isSuccess } = useGetMeQuery();
   useEffect(() => {
     if (isSuccess && data) {
-      dispatch(addUserData({ id: data.userId, status: data.status, role: data.role }));
+      dispatch(addUserData({ id: data._id, status: data.status, role: data.role }));
     }
   }, [isSuccess]);
 
@@ -75,7 +75,7 @@ function App(): JSX.Element {
             </header>
             <main className={styles.main}>
               <Routes>
-                <Route element={<Main />} path={''} />
+                <Route element={<Main />} path={'/'} />
                 <Route element={<AdminPanel />} path={'/adminPanel'} />
                 <Route element={<UserPage />} path={'/userPage'} />
                 <Route element={<ItemPage />} path={'/item/:id'} />

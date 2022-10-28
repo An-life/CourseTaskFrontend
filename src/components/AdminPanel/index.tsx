@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import Box from '@mui/material/Box';
@@ -13,7 +15,9 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import Tooltip from '@mui/material/Tooltip';
 
+import { addUserData } from '../../store/user/userSlice';
 import { ButtonOptions, IUsersData } from './types';
+import { getUserInfo } from '../../store/user/userSelectors';
 import Title from '../common/Title';
 import {
   useChangeUsersRoleMutation,
@@ -26,11 +30,26 @@ import styles from './styles.module.scss';
 
 function AdminPanel(): JSX.Element {
   const [selectionModel, setSelectionModel] = useState<Array<string | number>>([]);
+  const userData = useSelector(getUserInfo);
+  const dispatch = useDispatch();
 
   const { data, isFetching } = useGetUsersQuery();
   const [deleteUser] = useDeleteUsersMutation();
   const [changeStatus] = useChangeUsersStatusMutation();
   const [changeRole] = useChangeUsersRoleMutation();
+
+  useEffect(() => {
+    if (data?.length) {
+      const user = data?.filter(item => item.userId === userData.id);
+      dispatch(
+        addUserData({
+          id: user[0]?.userId,
+          status: user[0]?.status,
+          role: user[0]?.role,
+        }),
+      );
+    }
+  }, [data]);
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 150 },
@@ -101,6 +120,10 @@ function AdminPanel(): JSX.Element {
       onClick: changeRoleHandler,
     },
   ];
+
+  if (userData.role !== 'admin' || userData.status !== 'active') {
+    return <Navigate to={'/'} />;
+  }
 
   return (
     <Container fixed sx={{ maxWidth: 'xl' }}>
