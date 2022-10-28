@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import classNames from 'classnames';
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import { addUserData } from '../../store/user/userSlice';
 import AdminPanel from '../AdminPanel';
 import { Context } from '../../context/settingsContext';
 import ItemPage from '../ItemPage';
@@ -15,9 +17,8 @@ import Main from '../Main';
 import { messages } from '../../i18n/messages';
 import Nav from '../Nav';
 import UserPage from '../UserPage';
-
-import { useGetMeQuery } from './../../api/authApi';
 import { useSettings } from '../../hooks/useSettings';
+import { useGetMeQuery } from '../../api/authApi';
 
 import styles from './App.module.scss';
 
@@ -35,10 +36,15 @@ const lightTheme = createTheme({
 
 function App(): JSX.Element {
   const { settingsData, addSettingsData } = useSettings();
-  const { data } = useGetMeQuery();
-  console.log(data);
+  const dispatch = useDispatch();
 
   const SettingContext = useMemo(() => settingsData, [settingsData]);
+  const { data, isSuccess } = useGetMeQuery();
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(addUserData({ id: data.userId, status: data.status, role: data.role }));
+    }
+  }, [isSuccess]);
 
   const locale =
     settingsData.language === Language.English ? LOCALES.ENGLISH : LOCALES.RUSSIAN;
