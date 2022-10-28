@@ -59,7 +59,7 @@ function Nav({ changeSettings }: SettingsProps): JSX.Element {
   const logoutHandler = (): void => {
     localStorage.removeItem('token');
     setIsAuth(false);
-    navigate('');
+    navigate('/');
   };
 
   const toggleDrawer =
