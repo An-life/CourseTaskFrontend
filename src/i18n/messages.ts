@@ -28,6 +28,11 @@ export const messages = {
     registration_not_acount: ', if you don`t have account',
     registration_acount: ', if you have account',
     registration_send: 'Send',
+    item_options: 'Additional potions for items',
+    item_field: 'Add option',
+    item_field_delete: 'Delete option',
+    drop: 'Drop the files here ...',
+    drag: 'Drag `&apos;`n`&apos;` drop some images here, or click to select files',
   },
   [LOCALES.RUSSIAN]: {
     admin_users: 'Управление пользователями',
@@ -56,5 +61,10 @@ export const messages = {
     registration_not_acount: ', если нет акаунта',
     registration_acount: ', если есть акаунт',
     registration_send: 'Отправить',
+    item_options: 'Дополнительные поля для предметов',
+    item_field: 'Добавить поле',
+    item_field_delete: 'Удалить поле',
+    drop: 'Перетащите картинку сюда ...',
+    drag: 'Перетащите несколько картинок сюда или нажмите, чтобы выбрать файлы',
   },
 };

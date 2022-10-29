@@ -11,7 +11,7 @@ import AdminPanel from '../AdminPanel';
 import { Context } from '../../context/settingsContext';
 import ItemPage from '../ItemPage';
 import CollectionPage from '../CollectionPage';
-import { Language, Theme } from '../../types/common';
+import { Language, Theme } from '../../types/settings';
 import { LOCALES } from '../../i18n/locales';
 import Main from '../Main';
 import { messages } from '../../i18n/messages';

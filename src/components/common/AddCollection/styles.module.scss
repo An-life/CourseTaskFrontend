@@ -1,0 +1,18 @@
+@import './../../../styles/colors.scss';
+@import './../../../styles/mixins.scss';
+
+.dropzone {
+  height: 8rem;
+  margin: 1rem;
+  padding: 1rem;
+  border: 2px dashed $color-blue-light;
+  color:$color-blue-light;
+  @include flex(center, center, row);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.active {
+  border: 2px solid $color-orange;
+  color:$color-orange;
+}

@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { Context } from '../../context/settingsContext';
-import { Language, Theme } from '../../types/common';
+import { Language, Theme } from '../../types/settings';
 import { ISettingOption } from './types';
 import { SettingsProps } from '../Nav/types';
 
@@ -47,10 +47,8 @@ function Settings({ changeSettings }: SettingsProps): JSX.Element {
         return (
           <Box sx={{ maxWidth: 200, margin: 5 }} key={title}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">{title}</InputLabel>
+              <InputLabel>{title}</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
                 value={value}
                 label={title}
                 onChange={e =>

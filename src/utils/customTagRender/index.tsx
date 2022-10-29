@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ITag } from '../types/common';
+import { ITag } from '../../types/common';
 
 export const customTagRenderer = (
   tag: ITag,

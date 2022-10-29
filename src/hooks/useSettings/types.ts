@@ -1,4 +1,4 @@
-import { Language, ISettings, Theme } from '../../types/common';
+import { Language, ISettings, Theme } from '../../types/settings';
 
 export interface UseSettings {
   settingsData: ISettings;

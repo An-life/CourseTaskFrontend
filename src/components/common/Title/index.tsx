@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import classNames from 'classnames';
 
 import { Context } from '../../../context/settingsContext';
-import { Theme } from '../../../types/common';
+import { Theme } from '../../../types/settings';
 import { TitleProps } from './types';
 
 import common from './../../../styles/commonStyles.module.scss';

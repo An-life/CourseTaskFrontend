@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Language, Theme } from '../../types/common';
+import { Language, Theme } from '../../types/settings';
 
 export interface ISettingOption {
   title: string;
