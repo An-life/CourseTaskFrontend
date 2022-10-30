@@ -31,8 +31,9 @@ export const messages = {
     item_options: 'Additional potions for items',
     item_field: 'Add option',
     item_field_delete: 'Delete option',
-    drop: 'Drop the files here ...',
-    drag: 'Drag `&apos;`n`&apos;` drop some images here, or click to select files',
+    drop: 'Drop the file here ...',
+    drag: 'Drag `&apos;`n`&apos;` drop image here, or click to select file',
+    image_delete: 'Delete image',
   },
   [LOCALES.RUSSIAN]: {
     admin_users: 'Управление пользователями',
@@ -65,6 +66,7 @@ export const messages = {
     item_field: 'Добавить поле',
     item_field_delete: 'Удалить поле',
     drop: 'Перетащите картинку сюда ...',
-    drag: 'Перетащите несколько картинок сюда или нажмите, чтобы выбрать файлы',
+    drag: 'Перетащите картину сюда или нажмите, чтобы выбрать файл',
+    image_delete: 'Удалить картинку',
   },
 };

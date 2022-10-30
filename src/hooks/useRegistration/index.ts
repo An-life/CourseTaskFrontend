@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addUserData } from '../../store/user/userSlice';
+import { IRegistration } from './types';
 import { usePostRegistrationMutation } from '../../api/authApi';
 
-export const useRegistration = (): any => {
+export const useRegistration = (): IRegistration => {
   const dispatch = useDispatch();
+
   const [registration, { data, isSuccess, isLoading, error }] =
     usePostRegistrationMutation();
 

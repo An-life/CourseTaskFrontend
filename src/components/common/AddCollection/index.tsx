@@ -3,27 +3,31 @@ import classNames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import MDEditor from '@uiw/react-md-editor';
 import { useForm } from 'react-hook-form';
-import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 
+import { amber } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import Tooltip from '@mui/material/Tooltip';
 
 import AddAdditionalOptions from '../AddAdditionalOptions';
 import Title from '../Title';
-import { IAddCollectionInputs } from './types';
+import { IAddCollectionInputs, IAddAdditionalOptions } from './types';
 
 import common from './../../../styles/commonStyles.module.scss';
 import styles from './styles.module.scss';
 
 const style = {
   position: 'absolute' as 'absolute',
-  top: '70%',
+  top: '80%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 350,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -38,18 +42,24 @@ const options = ['Sport', 'Games', 'Films'];
 
 function AddCollection(): JSX.Element {
   const [description, setDescription] = useState<any>('');
-  const [uploadedImage, setUploadedImage] =
-    useState<
-      <T extends File>(
-        acceptedFiles: T[],
-        fileRejections: FileRejection[],
-        event: DropEvent,
-      ) => void
-    >();
-  console.log(uploadedImage);
+  const [uploadedImage, setUploadedImage] = useState<any>();
+  const [optionsFields, setOptionsFields] = useState<IAddAdditionalOptions[] | []>([]);
+
+  const deleteImageHandler = (): void => {
+    setUploadedImage('');
+  };
+
+  const previewFile = (file: any): void => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setUploadedImage(reader?.result);
+    };
+  };
 
   const onDrop = useCallback((acceptedFiles: any) => {
-    setUploadedImage(acceptedFiles);
+    setUploadedImage(acceptedFiles[0]);
+    previewFile(acceptedFiles[0]);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -67,7 +77,14 @@ function AddCollection(): JSX.Element {
   const isFetching = false;
 
   const onSubmitHandler = (data: IAddCollectionInputs): void => {
-    console.log(data);
+    const addCollectionFormData = {
+      title: data.title,
+      topic: data.topic,
+      description,
+      image: uploadedImage,
+      additionalOptions: optionsFields,
+    };
+    console.log(addCollectionFormData);
   };
 
   return (
@@ -119,16 +136,31 @@ function AddCollection(): JSX.Element {
       <div>
         <MDEditor value={description} onChange={setDescription} />
       </div>
-      <div
-        {...getRootProps()}
-        className={classNames(styles.dropzone, {
-          [styles.active]: isDragActive,
-        })}
-      >
-        <input {...getInputProps()} />
-        {isDragActive ? <FormattedMessage id="drop" /> : <FormattedMessage id="drag" />}
-      </div>
-      <AddAdditionalOptions />
+      {!uploadedImage && (
+        <div
+          {...getRootProps()}
+          className={classNames(styles.dropzone, {
+            [styles.active]: isDragActive,
+          })}
+        >
+          <input {...getInputProps()} />
+          {isDragActive ? <FormattedMessage id="drop" /> : <FormattedMessage id="drag" />}
+        </div>
+      )}
+      {uploadedImage && (
+        <div className={styles.container}>
+          <img src={uploadedImage} alt="chosen" className={styles.image} />
+          <Tooltip title={<FormattedMessage id="image_delete" />}>
+            <IconButton onClick={deleteImageHandler}>
+              <DeleteIcon fontSize="small" sx={{ color: amber[700] }} />
+            </IconButton>
+          </Tooltip>
+        </div>
+      )}
+      <AddAdditionalOptions
+        optionsFields={optionsFields}
+        setOptionsFields={setOptionsFields}
+      />
       {isFetching ? (
         <CircularProgress />
       ) : (

@@ -16,3 +16,12 @@
   border: 2px solid $color-orange;
   color:$color-orange;
 }
+
+.container{
+  @include flex(center, flex-start, row);
+
+  .image{
+  width: 200px;
+  height:auto;
+}
+}

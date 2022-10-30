@@ -13,7 +13,7 @@ import TextField from '@mui/material/TextField';
 
 import { Context } from '../../../context/settingsContext';
 import { dataTypesIcons } from '../../../constants/common';
-import { IAddAdditionalOptions } from './types';
+import { IAdditionalOptions } from './types';
 import { options } from './constants';
 import { Theme } from '../../../types/settings';
 
@@ -28,9 +28,12 @@ const style = {
   gap: '5px',
 };
 
-function AddAdditionalOptions(): JSX.Element {
+function AddAdditionalOptions({
+  optionsFields,
+  setOptionsFields,
+}: IAdditionalOptions): JSX.Element {
   const { theme } = useContext(Context);
-  const [optionsFields, setOptionsFields] = useState<IAddAdditionalOptions[] | []>([]);
+
   const [title, setTitle] = useState('');
   const [type, setType] = useState('');
 
@@ -38,12 +41,16 @@ function AddAdditionalOptions(): JSX.Element {
     const chekedOptions = optionsFields.filter(item => item.title !== title);
 
     setOptionsFields([{ type, title }, ...chekedOptions]);
+    setTitle('');
+    setType('');
   };
-  console.log(optionsFields);
+
   const removeOptionHandler = (optionTitle: string): void => {
     const filteredOptions = optionsFields?.filter(item => item.title !== optionTitle);
+
     setOptionsFields(filteredOptions);
   };
+
   return (
     <div>
       <div

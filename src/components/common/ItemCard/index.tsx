@@ -15,13 +15,13 @@ const ItemCard = ({ title }: IItemCard): JSX.Element => {
       <CardHeader title={title} />
       <CardMedia component="img" height="150" image={noImage} alt="image" />
       <Typography variant="body2" color="text.secondary">
-        <span>Author: Me</span>
+        Author: Me
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        <span>Collection:</span>
+        Collection:
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        <span>Tags:</span>
+        Tags:
         <Chip label="Tag" variant="outlined" />
       </Typography>
     </Card>

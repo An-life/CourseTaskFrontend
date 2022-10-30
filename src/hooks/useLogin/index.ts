@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addUserData } from '../../store/user/userSlice';
+import { ILogin } from './types';
 import { usePostLoginMutation } from '../../api/authApi';
 
-export const useLogin = (): any => {
+export const useLogin = (): ILogin => {
   const [login, { data, isSuccess, isLoading, error }] = usePostLoginMutation();
   const dispatch = useDispatch();
 

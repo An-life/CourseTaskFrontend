@@ -36,7 +36,7 @@ function Registration({ closeDrawerMenu, setIsAuth }: IRegistration): JSX.Elemen
   const { login, isSuccessLogin, isLoadingLogin, loginError } = useLogin();
 
   useEffect(() => {
-    if (isSuccessRegistration === true || isSuccessLogin === true) {
+    if (isSuccessRegistration || isSuccessLogin) {
       closeDrawerMenu();
       setIsAuth();
     }
@@ -60,11 +60,15 @@ function Registration({ closeDrawerMenu, setIsAuth }: IRegistration): JSX.Elemen
     toast(registrationError.data.message);
   }
 
-  const onSubmitHandler = ({ name, email, password }: IRegistrationInputs): void => {
+  const onSubmitHandler = async ({
+    name,
+    email,
+    password,
+  }: IRegistrationInputs): Promise<void> => {
     if (!isRegistered) {
-      registration({ name, email, password });
+      await registration({ name, email, password });
     } else {
-      login({ email, password });
+      await login({ email, password });
     }
   };
 
