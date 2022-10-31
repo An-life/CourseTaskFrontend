@@ -1,4 +1,6 @@
 export interface IItemCard {
-  cardId: string;
   title: string;
+  user: string;
+  collection: string;
+  tags: string[];
 }

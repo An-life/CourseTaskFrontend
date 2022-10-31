@@ -5,6 +5,8 @@ export interface ExpandMoreProps extends IconButtonProps {
 }
 
 export interface ICatalogCard {
-  cardId: string;
   title: string;
+  user: string;
+  topic: string;
+  description: string;
 }

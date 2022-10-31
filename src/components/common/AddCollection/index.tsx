@@ -17,7 +17,8 @@ import Tooltip from '@mui/material/Tooltip';
 
 import AddAdditionalOptions from '../AddAdditionalOptions';
 import Title from '../Title';
-import { IAddCollectionInputs, IAddAdditionalOptions } from './types';
+import { topicOptions } from '../../../constants/temporary';
+import { IAddCollectionInputs, IAddAdditionalOptions, IInitialData } from './types';
 
 import common from './../../../styles/commonStyles.module.scss';
 import styles from './styles.module.scss';
@@ -38,10 +39,12 @@ const style = {
   gap: '20px',
 };
 
-const options = ['Sport', 'Games', 'Films'];
-
-function AddCollection(): JSX.Element {
-  const [description, setDescription] = useState<any>('');
+function AddCollection({
+  initialTitle,
+  initialDescription,
+  formType,
+}: IInitialData): JSX.Element {
+  const [description, setDescription] = useState<any>(initialDescription);
   const [uploadedImage, setUploadedImage] = useState<any>();
   const [optionsFields, setOptionsFields] = useState<IAddAdditionalOptions[] | []>([]);
 
@@ -77,14 +80,24 @@ function AddCollection(): JSX.Element {
   const isFetching = false;
 
   const onSubmitHandler = (data: IAddCollectionInputs): void => {
-    const addCollectionFormData = {
-      title: data.title,
-      topic: data.topic,
-      description,
-      image: uploadedImage,
-      additionalOptions: optionsFields,
-    };
-    console.log(addCollectionFormData);
+    if (formType === 'add') {
+      const addCollectionFormData = {
+        title: data.title,
+        topic: data.topic,
+        description,
+        image: uploadedImage,
+        additionalOptions: optionsFields,
+      };
+      console.log(addCollectionFormData);
+    } else {
+      const changedCollectionFormData = {
+        title: data.title,
+        topic: data.topic,
+        description,
+        image: uploadedImage,
+      };
+      console.log(changedCollectionFormData);
+    }
   };
 
   return (
@@ -101,6 +114,7 @@ function AddCollection(): JSX.Element {
       <TextField
         label="Title"
         variant="outlined"
+        defaultValue={initialTitle}
         {...register('title', {
           required: true,
           minLength: {
@@ -125,7 +139,7 @@ function AddCollection(): JSX.Element {
           required: 'Please enter topic',
         })}
       >
-        {options.map(value => {
+        {topicOptions.map(value => {
           return (
             <MenuItem value={value} key={value}>
               {value}
@@ -157,10 +171,12 @@ function AddCollection(): JSX.Element {
           </Tooltip>
         </div>
       )}
-      <AddAdditionalOptions
-        optionsFields={optionsFields}
-        setOptionsFields={setOptionsFields}
-      />
+      {formType === 'add' && (
+        <AddAdditionalOptions
+          optionsFields={optionsFields}
+          setOptionsFields={setOptionsFields}
+        />
+      )}
       {isFetching ? (
         <CircularProgress />
       ) : (

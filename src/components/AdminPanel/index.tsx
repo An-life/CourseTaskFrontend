@@ -17,6 +17,8 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { addUserData } from '../../store/user/userSlice';
 import { ButtonOptions, IUsersData } from './types';
+import { collectionData } from '../../constants/temporary';
+import CollectionCard from '../common/CollectionCard';
 import { getUserInfo } from '../../store/user/userSelectors';
 import Title from '../common/Title';
 import {
@@ -174,6 +176,32 @@ function AdminPanel(): JSX.Element {
           </div>
         </>
       )}
+      <Title>
+        <FormattedMessage id="admin_collections" />
+      </Title>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          gap: 5,
+        }}
+      >
+        {collectionData.map(({ title, user, topic, description }) => {
+          return (
+            <div key={title}>
+              <CollectionCard
+                title={title}
+                user={user}
+                topic={topic}
+                description={description}
+              />
+            </div>
+          );
+        })}
+      </Box>
     </Container>
   );
 }
